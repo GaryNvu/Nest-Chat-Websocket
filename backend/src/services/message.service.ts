@@ -18,15 +18,18 @@ export class MessageService {
     }
 
     async findAll(): Promise<MessageEntity[]> {
-        return this.messageRepo.find();
+        return this.messageRepo.find({
+            relations: ['user'],
+            order: { createdAt: 'ASC' },
+        });
     }
 
-    async create(userId: string, content: string): Promise<MessageEntity> {
+    async create(userId: string, contentData: string): Promise<MessageEntity> {
         const user = await this.userService.findById(userId);
         if (!user) throw new NotFoundException("User not found");
         const message = this.messageRepo.create(
             {
-                content : content, 
+                content : contentData, 
                 user: user
             });
         return this.messageRepo.save(message);

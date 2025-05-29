@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-8">
+        <h1 class="text-2xl font-bold text-center mb-8">Settings</h1>
+
+        <div class="flex flex-col items-center gap-6">
+            <!-- Avatar Section -->
+            <div class="text-center">
+                <div class="w-32 h-32 mb-4">
+                    <app-avatar
+                        [username]="currentUser()?.username || ''"
+                        [color]="currentUser()?.color || '#000000'"
+                    ></app-avatar>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div *ngIf="showSuccessMessage" 
+                class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in-out">
+                Color updated successfully!
+            </div>
+
+            <!-- Color Picker Section -->
+            <div class="w-full">
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Custom Color</h3>
+                <div class="flex justify-center bg-gray-50 rounded-lg p-6">
+                    <div class="flex items-start gap-6">
+                        <div class="">
+                            <color-sketch
+                                [color]="selectedColor"
+                                (onChangeComplete)="onColorChange($event)"
+                                class="w-full"
+                            ></color-sketch>
+                        </div>
+                        <div>
+                            <h3 class="font-medium mb-5">Preview</h3>
+                            <div class="flex flex-row gap-5">
+                                <div 
+                                    class="w-24 h-24 rounded-lg shadow-md transition-transform hover:scale-105"
+                                    [style.backgroundColor]="selectedColor"
+                                ></div>
+                                <div class="text-center">
+                                    <div class="w-24 h-24 mb-4">
+                                        <app-avatar
+                                            [username]="currentUser()?.username || ''"
+                                            [color]="selectedColor"
+                                        ></app-avatar>
+                                    </div>
+                                </div>
+                            </div>
+                            <button 
+                                class="flex self-center px-8 py-3 bg-gray-50 shadow-md text-gray-700 rounded-lg hover:bg-gray-100"
+                                (click)="saveChanges()"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

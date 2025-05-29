@@ -7,7 +7,10 @@ import { Not, Repository } from "typeorm";
 @Injectable()
 export class UserService {
     users: any;
-    constructor(@InjectRepository(UserEntity) private userRepo: Repository<UserEntity>) {}
+    constructor(
+        @InjectRepository(UserEntity) 
+        private userRepo: Repository<UserEntity>
+    ) {}
     
     async findById(id: string): Promise<UserEntity | null> {
         const user = this.userRepo.findOne({ where: { id } });
@@ -30,14 +33,22 @@ export class UserService {
             username: data.username,
             email: data.email,
             password: data.password,
+            color: data.color,
         }
-        return this.userRepo.create(user);
+        return this.userRepo.save(user);
     }
 
     async updateColor(userId: string, color: string): Promise<UserEntity> {
         const user = await this.userRepo.findOne({ where: { id: userId } });
         if (!user) throw new NotFoundException("User not found");
+
         user.color = color;
-        return this.userRepo.save(user);
+
+        const newUser = await this.userRepo.save(user);
+
+        if (!newUser) {
+            throw new NotFoundException("Failed to retrieve updated user");
+        }
+        return newUser;
     }
 }

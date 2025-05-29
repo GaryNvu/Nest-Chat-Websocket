@@ -7,6 +7,8 @@ import { MessageEntity } from './entities/message.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user.module';
 import { MessageModule } from './modules/message.module';
+import { AuthModule } from './modules/auth.module';
+import { MessageGateway } from './gateways/message.gateway';
 
 @Module({
   imports: [
@@ -27,8 +29,9 @@ import { MessageModule } from './modules/message.module';
     }),
     UserModule,
     MessageModule,
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MessageGateway],
 })
 export class AppModule {}

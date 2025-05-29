@@ -1,0 +1,13 @@
+<div 
+    class="w-full h-full rounded-full flex items-center justify-center"
+    [style.backgroundColor]="color"
+>
+    <span class="text-white font-bold" [ngClass]="{
+        'text-xs': containerWidth < 32,
+        'text-sm': containerWidth >= 32 && containerWidth < 48,
+        'text-base': containerWidth >= 48 && containerWidth < 64,
+        'text-xl': containerWidth >= 64
+    }">
+    {{initial}}
+    </span>
+</div>

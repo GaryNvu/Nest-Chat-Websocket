@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { CreateMessageDto } from "src/dtos/create-message.dto";
 import { MessageService } from "src/services/message.service";
 import { UserService } from "src/services/user.service";
 
@@ -20,7 +21,8 @@ export class MessageController {
     }
 
     @Post()
-    create(@Param('userId') userId: string, @Param('content') content: string) {
+    create(@Body() createMessageDto: CreateMessageDto) {
+        const { userId, content } = createMessageDto;
         return this.messageService.create(userId, content);
     }
 }

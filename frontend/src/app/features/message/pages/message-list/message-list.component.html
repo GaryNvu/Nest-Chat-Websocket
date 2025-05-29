@@ -1,0 +1,51 @@
+<section class="h-screen flex items-center justify-center bg-gray-50">
+    <div class="rounded-lg flex flex-col w-2/3 h-[90vh]">
+        <div #scrollContainer class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div *ngFor="let message of messages()" 
+                class="flex w-full"
+                [ngClass]="{ 'justify-end': isCurrentUserMessage(message), 'justify-start': !isCurrentUserMessage(message) }">
+            
+            <div class="flex items-start gap-2">
+                <ng-container *ngIf="!isCurrentUserMessage(message)">
+                <div class="w-8 h-8">
+                    <app-avatar
+                    [username]="message.user.username"
+                    [color]="message.user.color">
+                    </app-avatar>
+                </div>
+                </ng-container>
+
+                <div
+                class="p-4 rounded-lg max-w-md w-fit text-white"
+                [style.backgroundColor]="message.user.color || '#3b82f6'">
+                <p>{{ message.content }}</p>
+                <span class="text-xs italic block mt-1">
+                    {{ message.createdAt | date: 'short' }}
+                </span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="p-4">
+            <form (ngSubmit)="sendMessage()" class="flex gap-2">
+                <input
+                    type="text"
+                    [(ngModel)]="newMessage"
+                    name="newMessage"
+                    class="flex-1 p-3 bg-white border border-gray-300 rounded-full"
+                    placeholder="Type a message..."
+                />
+                <button
+                    type="submit"
+                    class="px-6 py-3 text-white rounded-full focus:outline-none"
+                    [style.backgroundColor]="currentUser()?.color || '#3b82f6'"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>

@@ -25,7 +25,7 @@ export class UserController {
         return this.userService.create(body);
     }
 
-    @Post('color')
+    @Post('color/:id')
     updateColor(@Param('id') id: string, @Body('color') color: string) {
         return this.userService.updateColor(id, color);
     }
