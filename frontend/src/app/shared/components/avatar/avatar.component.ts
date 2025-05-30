@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,10 +14,14 @@ export class AvatarComponent implements AfterViewInit {
 
   containerWidth: number = 0;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit() {
     this.containerWidth = this.elementRef.nativeElement.offsetWidth;
+    this.cdr.detectChanges();
   }
 
   get initial(): string {
